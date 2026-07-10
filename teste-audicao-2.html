@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teste Rápido de Audição | Clarisom</title>
+
+<!-- Link do GitHub Pages. Se o usuário/repositório final for diferente de "clarisom/clarisom-audicao", troque as 3 URLs abaixo -->
+<meta property="og:title" content="Teste Rápido de Audição | Clarisom">
+<meta property="og:description" content="Responda 6 perguntas simples e descubra em 1 minuto se vale a pena avaliar sua audição. Teste gratuito.">
+<meta property="og:image" content="https://vivaosom-br.github.io/clarisom-audicao/og-teste-audicao.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vivaosom-br.github.io/clarisom-audicao/teste-audicao.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Teste Rápido de Audição | Clarisom">
+<meta name="twitter:description" content="Responda 6 perguntas simples e descubra em 1 minuto se vale a pena avaliar sua audição.">
+<meta name="twitter:image" content="https://vivaosom-br.github.io/clarisom-audicao/og-teste-audicao.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #0D3B66;
+    --azul-medio: #1A6EA8;
+    --azul-claro: #E8F4FD;
+    --dourado: #0EA5C9;
+    --verde: #1B8A5A;
+    --texto: #1C2B3A;
+    --texto-suave: #5A6B7A;
+    --branco: #FFFFFF;
+    --cinza-claro: #F7F9FC;
+    --cinza: #E8EDF2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--texto);
+    background: var(--cinza-claro);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem 5% 4rem;
+  }
+
+  .topo {
+    text-align: center;
+    max-width: 560px;
+    margin-bottom: 2rem;
+  }
+
+  .marca {
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--azul);
+    margin-bottom: 1.2rem;
+  }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin-bottom: 0.8rem;
+  }
+
+  .topo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    font-weight: 700;
+    color: var(--azul);
+    line-height: 1.3;
+    margin-bottom: 0.8rem;
+  }
+
+  .topo h1 em { font-style: normal; color: var(--dourado); }
+
+  .topo p {
+    color: var(--texto-suave);
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  .teste-box {
+    background: var(--azul-claro);
+    border: 2px solid var(--azul-medio);
+    border-radius: 20px;
+    padding: 2.2rem 1.6rem;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) {
+    .teste-box { padding: 3rem; }
+  }
+
+  .teste-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--azul);
+    margin-bottom: 0.5rem;
+  }
+
+  .teste-box .intro-teste {
+    color: var(--texto-suave);
+    margin-bottom: 1.6rem;
+    font-size: 0.95rem;
+  }
+
+  .progresso {
+    height: 6px;
+    background: var(--cinza);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.6rem;
+  }
+
+  .progresso-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--dourado);
+    transition: width 0.3s ease;
+  }
+
+  .perguntas { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+
+  .pergunta-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    background: #fff;
+    border: 1px solid var(--cinza);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .pergunta-item.selecionado { border-color: var(--azul-medio); background: #EBF5FD; }
+
+  .pergunta-texto {
+    font-size: 0.93rem;
+    color: var(--texto);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .pergunta-btns { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+  .btn-sim, .btn-nao {
+    padding: 0.4rem 1rem;
+    border-radius: 5px;
+    border: 2px solid;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: transparent;
+  }
+
+  .btn-sim { border-color: var(--verde); color: var(--verde); }
+  .btn-sim.ativo { background: var(--verde); color: #fff; }
+  .btn-nao { border-color: #ccc; color: #999; }
+  .btn-nao.ativo { background: #ccc; color: #fff; }
+
+  .btn-sim:hover, .btn-nao:hover { opacity: 0.85; }
+
+  #resultado-teste {
+    display: none;
+    margin-top: 1.8rem;
+    color: #fff;
+    border-radius: 12px;
+    padding: 1.8rem 2rem;
+    text-align: center;
+  }
+
+  #resultado-teste h4 { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.6rem; }
+  #resultado-teste p { font-size: 0.92rem; opacity: 0.92; margin-bottom: 1.3rem; line-height: 1.5; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: #fff;
+    padding: 0.9rem 1.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.98rem;
+    transition: all 0.25s;
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); }
+
+  @keyframes btn-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.5); }
+    70%  { box-shadow: 0 0 0 12px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  }
+  .btn-pulse { animation: btn-pulse 2s ease-out infinite; }
+
+  .rodape {
+    margin-top: 2.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--texto-suave);
+  }
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <div class="marca">CLARISOM</div>
+  <span class="section-label">Autoavaliação rápida</span>
+  <h1>Você pode ter perda auditiva <em>sem saber.</em></h1>
+  <p>Responda as perguntas abaixo e descubra na hora se vale a pena fazer uma avaliação com um especialista. Leva menos de 1 minuto.</p>
+</div>
+
+<div class="teste-box">
+  <h3>Teste rápido de audição</h3>
+  <p class="intro-teste">Marque <strong>Sim</strong> para as situações que você reconhece no seu dia a dia:</p>
+
+  <div class="progresso"><div class="progresso-fill" id="progressoFill"></div></div>
+
+  <ul class="perguntas" id="perguntas">
+    <li class="pergunta-item" data-id="0">
+      <span class="pergunta-texto">Você pede frequentemente para as pessoas repetirem o que disseram?</span>
+      <div class="pergunta-btns">
+        <button class="btn-sim" onclick="responder(0,'sim',this)">Sim</button>
+        <button class="btn-nao" onclick="responder(0,'nao',this)">Não</button>
+      </div>
+    </li>
+    <li class="pergunta-item" data-id="1">
+      <span class="pergunta-texto">Aumenta o volume da TV mais do que outras pessoas ao redor precisam?</span>
+      <div class="pergunta-btns">
+        <button class="btn-sim" onclick="responder(1,'sim',this)">Sim</button>
+        <button class="btn-nao" onclick="responder(1,'nao',this)">Não</button>
+      </div>
+    </li>
+    <li class="pergunta-item" data-id="2">
+      <span class="pergunta-texto">Sente dificuldade em ouvir em ambientes com barulho (restaurantes, festas)?</span>
+      <div class="pergunta-btns">
+        <button class="btn-sim" onclick="responder(2,'sim',this)">Sim</button>
+        <button class="btn-nao" onclick="responder(2,'nao',this)">Não</button>
+      </div>
+    </li>
+    <li class="pergunta-item" data-id="3">
+      <span class="pergunta-texto">Em conversas em grupo, perde partes do que está sendo dito?</span>
+      <div class="pergunta-btns">
+        <button class="btn-sim" onclick="responder(3,'sim',this)">Sim</button>
+        <button class="btn-nao" onclick="responder(3,'nao',this)">Não</button>
+      </div>
+    </li>
+    <li class="pergunta-item" data-id="4">
+      <span class="pergunta-texto">Sente zumbido, chiado ou apito no ouvido com frequência?</span>
+      <div class="pergunta-btns">
+        <button class="btn-sim" onclick="responder(4,'sim',this)">Sim</button>
+        <button class="btn-nao" onclick="responder(4,'nao',this)">Não</button>
+      </div>
+    </li>
+    <li class="pergunta-item" data-id="5">
+      <span class="pergunta-texto">Sente que as pessoas falam baixo demais ou "engolindo as palavras"?</span>
+      <div class="pergunta-btns">
+        <button class="btn-sim" onclick="responder(5,'sim',this)">Sim</button>
+        <button class="btn-nao" onclick="responder(5,'nao',this)">Não</button>
+      </div>
+    </li>
+  </ul>
+
+  <div id="resultado-teste">
+    <h4 id="resultado-titulo">Recomendamos uma avaliação</h4>
+    <p id="resultado-texto">Suas respostas indicam sinais de possível perda auditiva. Na Clarisom, a avaliação é gratuita e sem compromisso.</p>
+    <a id="resultado-cta" href="#" target="_blank" class="btn-primary btn-pulse">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 2C6.469 2 2 6.474 2 12c0 1.75.453 3.393 1.242 4.834L2 22l5.328-1.207A9.956 9.956 0 0 0 11.99 22C17.52 22 22 17.526 22 12S17.52 2 11.99 2zm0 18a7.96 7.96 0 0 1-4.078-1.118l-.29-.174-3.164.717.763-3.08-.19-.314A7.952 7.952 0 0 1 4 12c0-4.411 3.584-8 7.99-8C16.404 4 20 7.589 20 12s-3.596 8-8.01 8z"/></svg>
+      <span id="resultado-cta-texto">Agendar avaliação agora</span>
+    </a>
+  </div>
+</div>
+
+<div class="rodape">Clarisom Aparelhos Auditivos · Florianópolis - SC</div>
+
+<script>
+  const respostas = {};
+  const totalPerguntas = document.querySelectorAll('.pergunta-item').length;
+  const numeroWhats = '5548992468127';
+
+  function responder(id, resp, btn) {
+    respostas[id] = resp;
+
+    const item = document.querySelector(`.pergunta-item[data-id="${id}"]`);
+    item.querySelectorAll('.btn-sim, .btn-nao').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    item.classList.toggle('selecionado', resp === 'sim');
+
+    const total = Object.keys(respostas).length;
+    document.getElementById('progressoFill').style.width = (total / totalPerguntas * 100) + '%';
+
+    // Assim que a última pergunta for respondida, mostra o resultado automaticamente
+    if (total >= totalPerguntas) {
+      mostrarResultado();
+    }
+  }
+
+  function mostrarResultado() {
+    const sins = Object.values(respostas).filter(r => r === 'sim').length;
+    const res = document.getElementById('resultado-teste');
+    const titulo = document.getElementById('resultado-titulo');
+    const texto = document.getElementById('resultado-texto');
+    const cta = document.getElementById('resultado-cta');
+    const ctaTexto = document.getElementById('resultado-cta-texto');
+
+    let mensagemWhats = '';
+
+    if (sins >= 1) {
+      titulo.textContent = 'Recomendamos uma avaliação';
+      texto.textContent = 'Suas respostas indicam sinais de possível perda auditiva. Na Clarisom, a avaliação é gratuita e sem compromisso. Descubra como melhorar sua qualidade de vida.';
+      res.style.background = 'var(--verde)';
+      cta.style.color = 'var(--verde)';
+      ctaTexto.textContent = 'Agendar avaliação gratuita';
+      mensagemWhats = `Olá! Fiz o teste rápido de audição no site e ${sins} de ${totalPerguntas} respostas indicaram sinais de perda auditiva. Gostaria de agendar minha avaliação gratuita.`;
+    } else {
+      titulo.textContent = 'Boa notícia';
+      texto.textContent = 'Suas respostas não indicam sinais evidentes de perda auditiva. Mesmo assim, avaliações periódicas são recomendadas. Podemos agendar uma verificação gratuita para sua tranquilidade.';
+      res.style.background = 'var(--azul-medio)';
+      cta.style.color = 'var(--azul-medio)';
+      ctaTexto.textContent = 'Agendar avaliação preventiva';
+      mensagemWhats = 'Olá! Fiz o teste rápido de audição no site e minhas respostas não indicaram sinais evidentes de perda. Gostaria de agendar uma avaliação preventiva gratuita.';
+    }
+
+    cta.href = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(mensagemWhats)}`;
+    res.style.display = 'block';
+    res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
+</body>
+</html>
